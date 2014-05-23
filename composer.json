@@ -1,0 +1,18 @@
+{
+  "name": "funnylookinhat/Purgatory",
+  "description": "Where things go to wait.  Easily work with any cloud object-store.",
+  "license": "MIT",
+  "keywords": ["php, object-store, s3, rackspace, cloudfiles, openstack, swift, ceph"],
+  "authors": [
+    {
+      "name": "David Overcash",
+      "email": "funnylookinhat@gmail.com"
+    }
+  ],
+  "require": {},
+  "autoload": {
+    "psr-4": {
+      "FunnyLookinHat\\Purgatory\\": "src"
+    }
+  }
+}
