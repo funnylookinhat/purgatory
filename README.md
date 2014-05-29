@@ -14,6 +14,7 @@ $config = (object)array(
     'provider' => 'rackspace',
     'username' => 'myUsername',
     'apiKey' => 'mySuperSecretApiKey',
+    'region' => 'ORD',
 );
 
 $purgatory = new Purgatory($config);
