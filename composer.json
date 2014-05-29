@@ -9,10 +9,12 @@
       "email": "funnylookinhat@gmail.com"
     }
   ],
-  "require": {},
+  "require": {
+    "rackspace/php-opencloud": "dev-master"
+  },
   "autoload": {
     "psr-4": {
-      "FunnyLookinHat\\Purgatory\\": "src"
+      "FunnyLookinHat\\Purgatory\\": "src/"
     }
   }
 }
