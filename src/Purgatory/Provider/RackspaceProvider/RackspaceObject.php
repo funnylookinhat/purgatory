@@ -8,9 +8,11 @@ use FunnyLookinHat\Purgatory\Purgatory\Object as ExtendObject;
 class RackspaceObject extends ExtendObject {
 
     private $_object;
+    private $_container;
 
-    public function __construct($object)
+    public function __construct($container, $object)
     {
+        $this->_container = $container;
         $this->_object = $object;
     }
 
@@ -19,14 +21,13 @@ class RackspaceObject extends ExtendObject {
     	return $this->_object->getName();
     }
 
-    public function updateObject($path)
+    public function update($path)
     {
     	try
     	{
     		$data = fopen($path, 'r+');
     		$this->_object->setContent($data);
-
-            // UPDATE OBJECT ?
+            $this->_object->update();
             
     		return $this;
     	}
@@ -36,9 +37,19 @@ class RackspaceObject extends ExtendObject {
     	}
     }
 
+    public function getChecksum()
+    {
+        return $this->_object->getEtag();
+    }
+
     public function getUrl()
     {
-    	return $this->_object->getUrl();
+        return $this->_container->getUrl().'/'.$this->getName();
+    }
+
+    public function getSslUrl()
+    {
+        return $this->_container->getSslUrl().'/'.$this->getName();
     }
 
 }

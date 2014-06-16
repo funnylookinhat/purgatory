@@ -4,11 +4,12 @@ namespace FunnyLookinHat\Purgatory;
 
 class PurgatoryException extends \Exception {}
 class PurgatoryContainerException extends \Exception {}
+class PurgatoryContainerCDNDisabledException extends \Exception {}
 class PurgatoryContainerDNEException extends \Exception {}
 class PurgatoryContainerExistsException extends \Exception {}
-class PurgatoryFileException extends \Exception {}
-class PurgatoryFileDNEException extends \Exception {}
-class PurgatoryFileExistsException extends \Exception {}
+class PurgatoryObjectException extends \Exception {}
+class PurgatoryObjectDNEException extends \Exception {}
+class PurgatoryObjectExistsException extends \Exception {}
 
 class Purgatory {
 

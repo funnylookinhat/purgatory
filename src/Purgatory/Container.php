@@ -12,4 +12,16 @@ abstract class Container {
 
     abstract public function createObject($name, $path);
 
+    abstract public function getAllObjects();
+
+    abstract public function listAllObjects();
+
+    abstract public function enableCdn();
+
+    abstract public function disableCdn();
+
+    abstract public function getUrl();
+
+    abstract public function getSslUrl();
+
 }

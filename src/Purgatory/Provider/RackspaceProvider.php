@@ -40,23 +40,28 @@ class RackspaceProvider extends ExtendProvider {
         }
     }
 
+    public function getContainers()
+    {
+        $provider_containers = $this->_service->listContainers();
+        
+        $containers = array();
+
+        foreach( $provider_containers as $provider_container )
+            $containers[] = new \FunnyLookinHat\Purgatory\Purgatory\Provider\RackspaceProvider\RackspaceContainer($provider_container);
+
+        return $containers;
+    }
+
     public function listContainers()
     {
-        try
-        {
-            $containers = $this->_service->listContainers();
-            
-            $containerNames = array();
+        $containers = $this->_service->listContainers();
+        
+        $containerNames = array();
 
-            foreach( $containers as $container )
-                $containerNames[] = $container->getName();
+        foreach( $containers as $container )
+            $containerNames[] = $container->getName();
 
-            return $containerNames;
-        }
-        catch( \Exception $e )
-        {
-            throw new \FunnyLookinHat\Purgatory\PurgatoryContainerDNEException("Could not fetch container: ".$e->getMessage());
-        }
+        return $containerNames;
     }
 
     public function getContainer($name)
