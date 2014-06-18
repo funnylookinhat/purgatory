@@ -2,7 +2,7 @@
   "name": "funnylookinhat/purgatory",
   "description": "Where objects go to wait.  Easily work with any cloud object-store.",
   "license": "MIT",
-  "keywords": ["php, object-store, s3, rackspace, cloudfiles, openstack, swift, ceph"],
+  "keywords": ["php", "object-store", "s3", "rackspace", "cloudfiles", "openstack", "swift", "ceph"],
   "authors": [
     {
       "name": "David Overcash",
