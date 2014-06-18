@@ -7,6 +7,14 @@ Where objects to go wait.
 You can build your fancy whatever.js.it.er with support for image uploads and delivery via local storage, 
 and convert it to infinitely scalable cloud storage by simply changing the credentials provided. 
 
+## Installation
+
+Add the following to your composer.json:
+
+```
+"funnylookinhat/purgatory": "dev-master"
+```
+
 ## Basic Usage
 
 Everything begins with initializing a provider; this can include platform-specific options, but all API calls after this point are platform agnostic.
