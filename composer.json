@@ -11,7 +11,7 @@
   ],
   "require": {
     "php": ">=5.3.0",
-    "rackspace/php-opencloud": "dev-working"
+    "rackspace/php-opencloud": "*@dev"
   },
   "autoload": {
     "psr-4": {
