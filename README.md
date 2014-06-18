@@ -1,7 +1,11 @@
 purgatory
 =========
 
-Where things to go wait.
+Where objects to go wait.
+
+**Purgatory is a platform agnostic object store library.** 
+You can build your fancy whatever.js.it.er with support for image uploads and delivery via local storage, 
+and convert it to infinitely scalable cloud storage by simply changing the credentials provided. 
 
 ## Basic Usage
 
