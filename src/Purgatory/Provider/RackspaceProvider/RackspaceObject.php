@@ -52,4 +52,9 @@ class RackspaceObject extends ExtendObject {
         return $this->_container->getSslUrl().'/'.$this->getName();
     }
 
+    public function delete()
+    {
+        $this->_object->delete();
+    }
+
 }

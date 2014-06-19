@@ -16,4 +16,6 @@ abstract class Object {
 
     abstract public function getSslUrl();
 
+    abstract public function delete();
+
 }
