@@ -7,10 +7,12 @@ use FunnyLookinHat\Purgatory\Purgatory\Container as ExtendContainer;
 
 class RackspaceContainer extends ExtendContainer {
     
+    private $_provider;
     private $_container;
 
-    public function __construct($container)
+    public function __construct($provider, $container)
     {
+        $this->_provider = $provider;
         $this->_container = $container;
     }
 

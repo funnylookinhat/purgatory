@@ -18,6 +18,7 @@ class Purgatory {
 
 	private $_supportedProviders = array(
 		'Rackspace',
+		'Local',
 	);
 
 	public function __construct($config)

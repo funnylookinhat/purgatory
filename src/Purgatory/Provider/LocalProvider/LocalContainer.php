@@ -6,6 +6,7 @@ use FunnyLookinHat\Purgatory\Purgatory\Container as ExtendContainer;
 
 class LocalContainer extends ExtendContainer {
     
+    private $_provider;
     private $_container;
     private $_data;
     private $_data_file = ".data.json";
@@ -32,8 +33,9 @@ class LocalContainer extends ExtendContainer {
      * }
      */
 
-    public function __construct($container)
+    public function __construct($provider, $container)
     {
+    	$this->_provider = $provider;
         $this->_container = $container;
 
         try
@@ -78,9 +80,10 @@ class LocalContainer extends ExtendContainer {
 
     	try
     	{
-    		copy($path, $this->_container->path.'/'.$name);
+    		if( ! @copy($path, $this->_container->path.'/'.$name) )
+    			throw new \Exception("Could not copy file.");
     	}
-    	catch( Exception $e )
+    	catch( \Exception $e )
     	{
     		throw new \FunnyLookinHat\Purgatory\PurgatoryObjectException("Could not upload object: ".$e->getMessage());
     	}
@@ -107,9 +110,10 @@ class LocalContainer extends ExtendContainer {
 
     	try
     	{
-    		copy($path, $this->_container->path.'/'.$name);
+    		if( ! @copy($path, $this->_container->path.'/'.$name) )
+    			throw new \Exception("Could not copy file.");
     	}
-    	catch( Exception $e )
+    	catch( \Exception $e )
     	{
     		throw new \FunnyLookinHat\Purgatory\PurgatoryObjectException("Could not upload object: ".$e->getMessage());
     	}
@@ -142,8 +146,8 @@ class LocalContainer extends ExtendContainer {
         	throw new \FunnyLookinHat\Purgatory\PurgatoryObjectException("Could not delete object: ".$e->getMessage());
         }
 
-        array_splice($this->_container->index, array_search($name, $this->_container->index), 1);
-        unset($this->_container->objects->{$name});
+        array_splice($this->_data->index, array_search($name, $this->_data->index), 1);
+        unset($this->_data->objects->{$name});
 
         file_put_contents($this->_container->path.'/'.$this->_data_file, json_encode($this->_data));
     }
@@ -175,12 +179,12 @@ class LocalContainer extends ExtendContainer {
 
     public function getUrl()
     {
-        return $this->_container->url;
+        return $this->_provider->getUrl();
     }
 
     public function getSslUrl()
     {
-        return $this->_container->url;
+        return $this->_provider->getUrl();
     }
 
     

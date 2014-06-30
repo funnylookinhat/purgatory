@@ -4,7 +4,7 @@ namespace FunnyLookinHat\Purgatory\Purgatory;
 
 abstract class Container {
 
-    abstract public function __construct($container);
+    abstract public function __construct($provider, $container);
 
     abstract public function getName();
 

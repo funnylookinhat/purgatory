@@ -47,7 +47,7 @@ class RackspaceProvider extends ExtendProvider {
         $containers = array();
 
         foreach( $provider_containers as $provider_container )
-            $containers[] = new \FunnyLookinHat\Purgatory\Purgatory\Provider\RackspaceProvider\RackspaceContainer($provider_container);
+            $containers[] = new \FunnyLookinHat\Purgatory\Purgatory\Provider\RackspaceProvider\RackspaceContainer($this, $provider_container);
 
         return $containers;
     }
@@ -69,7 +69,7 @@ class RackspaceProvider extends ExtendProvider {
         try
         {
             $container = $this->_service->getContainer($name);
-            return new \FunnyLookinHat\Purgatory\Purgatory\Provider\RackspaceProvider\RackspaceContainer($container);
+            return new \FunnyLookinHat\Purgatory\Purgatory\Provider\RackspaceProvider\RackspaceContainer($this, $container);
         }
         catch( \Exception $e )
         {
