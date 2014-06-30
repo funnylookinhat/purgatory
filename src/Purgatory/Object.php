@@ -12,6 +12,8 @@ abstract class Object {
 
 	abstract public function getChecksum();
 
+	abstract public function getFilesize();
+
     abstract public function getUrl();
 
     abstract public function getSslUrl();
