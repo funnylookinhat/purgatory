@@ -35,66 +35,69 @@ class LocalContainer extends ExtendContainer {
 
     public function __construct($provider, $container)
     {
-    	$this->_provider = $provider;
+        $this->_provider = $provider;
         $this->_container = $container;
 
         try
         {
-	        if( ! file_exists($this->_container->path.'/'.$this->_data_file) )
-	        {
-	            $this->_data = (object)array(
+            if( ! file_exists($this->_container->path.'/'.$this->_data_file) )
+            {
+                $this->_data = (object)array(
                     'index' => array(),
-	            	'objects' => (object)array(),
-	            );
+                    'objects' => (object)array(),
+                );
 
-	            file_put_contents($this->_container->path.'/'.$this->_data_file, json_encode($this->_data));
-	        }
-	        else
-	        {
-	        	$this->_data = json_decode(file_get_contents($this->_container->path.'/'.$this->_data_file));
-	        }
-	    }
-	    catch( \Exception $e )
-	    {
-	    	throw new \FunnyLookinHat\Purgatory\PurgatoryException("Could not load or initialize data storage for container.  Are write permissions setup correctly?");
-	    }
+                file_put_contents($this->_container->path.'/'.$this->_data_file, json_encode($this->_data));
+            }
+            else
+            {
+                $this->_data = json_decode(file_get_contents($this->_container->path.'/'.$this->_data_file));
+            }
+        }
+        catch( \Exception $e )
+        {
+            throw new \FunnyLookinHat\Purgatory\PurgatoryException("Could not load or initialize data storage for container.  Are write permissions setup correctly?");
+        }
     }
 
     public function getName()
     {
-    	return $this->_container->name;
+        return $this->_container->name;
     }
 
     public function getObject($name)
     {
-    	if( ! isset($this->_data->objects->{$name}) )
-    		throw new \FunnyLookinHat\Purgatory\PurgatoryObjectDNEException("File not found in index: ".$name.".");
+        if( ! isset($this->_data->objects->{$name}) )
+            throw new \FunnyLookinHat\Purgatory\PurgatoryObjectDNEException("File not found in index: ".$name.".");
         
-    	return new \FunnyLookinHat\Purgatory\Purgatory\Provider\LocalProvider\LocalObject($this, $this->_data->objects->{$name});
+        return new \FunnyLookinHat\Purgatory\Purgatory\Provider\LocalProvider\LocalObject($this, $this->_data->objects->{$name});
     }
 
     public function createObject($name, $path)
     {
-    	if( isset($this->_data->objects->{$name}) )
-    		throw new \FunnyLookinHat\Purgatory\PurgatoryObjectExistsException("Object already exists: ".$name.".");
+        if( ! $name )
+            throw new \FunnyLookinHat\Purgatory\PurgatoryObjectException("Must provide an object name.");
 
-    	try
-    	{
-    		if( ! @copy($path, $this->_container->path.'/'.$name) )
-    			throw new \Exception("Could not copy file.");
-    	}
-    	catch( \Exception $e )
-    	{
-    		throw new \FunnyLookinHat\Purgatory\PurgatoryObjectException("Could not upload object: ".$e->getMessage());
-    	}
+        if( isset($this->_data->objects->{$name}) )
+            throw new \FunnyLookinHat\Purgatory\PurgatoryObjectExistsException("Object already exists: ".$name.".");
 
-    	$object = (object)array(
-			'filename' => $name,
-			'filesize' => filesize($this->_container->path.'/'.$name),
-			'checksum' => md5_file($this->_container->path.'/'.$name),
-		);
+        try
+        {
+            if( ! @copy($path, $this->_container->path.'/'.$name) )
+                throw new \Exception("Could not copy file.");
+        }
+        catch( \Exception $e )
+        {
+            throw new \FunnyLookinHat\Purgatory\PurgatoryObjectException("Could not upload object: ".$e->getMessage());
+        }
 
-		$this->_data->objects->{$name} = $object;
+        $object = (object)array(
+            'filename' => $name,
+            'filesize' => filesize($this->_container->path.'/'.$name),
+            'checksum' => md5_file($this->_container->path.'/'.$name),
+        );
+
+        $this->_data->objects->{$name} = $object;
         $this->_data->index[] = $name;
 
         file_put_contents($this->_container->path.'/'.$this->_data_file, json_encode($this->_data));
@@ -105,45 +108,45 @@ class LocalContainer extends ExtendContainer {
     // This is primarily called by LocalObject - sort of a weird use case.
     public function updateObject($name, $path)
     {
-    	if( ! isset($this->_data->objects->{$name}) )
-    		throw new \FunnyLookinHat\Purgatory\PurgatoryObjectDNEException("File not found in index: ".$name.".");
+        if( ! isset($this->_data->objects->{$name}) )
+            throw new \FunnyLookinHat\Purgatory\PurgatoryObjectDNEException("File not found in index: ".$name.".");
 
-    	try
-    	{
-    		if( ! @copy($path, $this->_container->path.'/'.$name) )
-    			throw new \Exception("Could not copy file.");
-    	}
-    	catch( \Exception $e )
-    	{
-    		throw new \FunnyLookinHat\Purgatory\PurgatoryObjectException("Could not upload object: ".$e->getMessage());
-    	}
+        try
+        {
+            if( ! @copy($path, $this->_container->path.'/'.$name) )
+                throw new \Exception("Could not copy file.");
+        }
+        catch( \Exception $e )
+        {
+            throw new \FunnyLookinHat\Purgatory\PurgatoryObjectException("Could not upload object: ".$e->getMessage());
+        }
 
-    	$object = (object)array(
-			'filename' => $name,
-			'filesize' => filesize($this->_container->path.'/'.$name),
-			'checksum' => md5_file($this->_container->path.'/'.$name),
-		);
+        $object = (object)array(
+            'filename' => $name,
+            'filesize' => filesize($this->_container->path.'/'.$name),
+            'checksum' => md5_file($this->_container->path.'/'.$name),
+        );
 
-		$this->_data->objects->{$name} = $object;
+        $this->_data->objects->{$name} = $object;
 
-		file_put_contents($this->_container->path.'/'.$this->_data_file, json_encode($this->_data));
+        file_put_contents($this->_container->path.'/'.$this->_data_file, json_encode($this->_data));
 
-		return new \FunnyLookinHat\Purgatory\Purgatory\Provider\LocalProvider\LocalObject($this, $object);
+        return new \FunnyLookinHat\Purgatory\Purgatory\Provider\LocalProvider\LocalObject($this, $object);
     }
 
     // Another function primarily used by LocalObject - not extended from base object
     public function deleteObject($name)
     {
-    	if( ! isset($this->_data->objects->{$name}) )
-    		throw new \FunnyLookinHat\Purgatory\PurgatoryObjectDNEException("File not found in index: ".$name.".");
+        if( ! isset($this->_data->objects->{$name}) )
+            throw new \FunnyLookinHat\Purgatory\PurgatoryObjectDNEException("File not found in index: ".$name.".");
 
-    	try
+        try
         {
-        	unlink($this->_container->path.'/'.$name);
+            unlink($this->_container->path.'/'.$name);
         }
         catch( Exception $e )
         {
-        	throw new \FunnyLookinHat\Purgatory\PurgatoryObjectException("Could not delete object: ".$e->getMessage());
+            throw new \FunnyLookinHat\Purgatory\PurgatoryObjectException("Could not delete object: ".$e->getMessage());
         }
 
         array_splice($this->_data->index, array_search($name, $this->_data->index), 1);
@@ -157,7 +160,7 @@ class LocalContainer extends ExtendContainer {
         $objects = array();
 
         foreach( $this->_data->index as $name )
-        	$objects[] = new \FunnyLookinHat\Purgatory\Purgatory\Provider\LocalProvider\LocalObject($this, $this->_data->objects->{$name});
+            $objects[] = new \FunnyLookinHat\Purgatory\Purgatory\Provider\LocalProvider\LocalObject($this, $this->_data->objects->{$name});
 
         return $objects;
     }
