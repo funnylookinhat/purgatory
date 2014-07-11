@@ -28,6 +28,9 @@ class RackspaceObject extends ExtendObject {
     		$data = fopen($path, 'r+');
     		$this->_object->setContent($data);
             $this->_object->update();
+
+            // Request object be purged from CDN.
+            $this->_object->purge();
             
     		return $this;
     	}
