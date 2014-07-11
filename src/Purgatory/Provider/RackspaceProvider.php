@@ -82,7 +82,7 @@ class RackspaceProvider extends ExtendProvider {
         try
         {
             $container = $this->_service->createContainer($name);
-            return new Purgatory\Provider\Rackspace\Container($container);
+            return new Purgatory\Provider\Rackspace\RackspaceContainer($container);
         }
         catch( \Exception $e )
         {
