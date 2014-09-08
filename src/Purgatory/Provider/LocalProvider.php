@@ -117,6 +117,7 @@ class LocalProvider extends ExtendProvider {
             'name' => $name,
             'path' => $this->_storage.'/'.$name,
             'url' => $this->_base_url.'/'.$name,
+            'ssl_url' => $this->_base_url.'/'.$name,
         );
 
         $this->_data->containers->{$name} = $container;

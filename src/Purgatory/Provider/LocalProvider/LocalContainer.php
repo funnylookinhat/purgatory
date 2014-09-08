@@ -182,12 +182,12 @@ class LocalContainer extends ExtendContainer {
 
     public function getUrl()
     {
-        return $this->_provider->getUrl();
+        return $this->_container->url;
     }
 
     public function getSslUrl()
     {
-        return $this->_provider->getUrl();
+        return $this->_container->ssl_url;
     }
 
     
