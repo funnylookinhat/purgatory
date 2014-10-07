@@ -88,7 +88,7 @@ class LocalProvider extends ExtendProvider {
         $containers = array();
 
         foreach( $this->_data->index as $containerName )
-            $containers[] = new \FunnyLookinHat\Purgatory\Purgatory\Provider\LocalProvider\LocalContainer($this, $this->_data->containers->{$containerName});
+            $containers[] = new Purgatory\Provider\LocalProvider\LocalContainer($this, $this->_data->containers->{$containerName});
 
         return $containers;
     }
@@ -103,7 +103,7 @@ class LocalProvider extends ExtendProvider {
         if( ! isset($this->_data->containers->{$name}) )
             throw new \FunnyLookinHat\Purgatory\PurgatoryContainerDNEException("Could not fetch container: does not exist.");
 
-        return new \FunnyLookinHat\Purgatory\Purgatory\Provider\LocalProvider\LocalContainer($this, $this->_data->containers->{$name});
+        return new Purgatory\Provider\LocalProvider\LocalContainer($this, $this->_data->containers->{$name});
     }
 
     public function createContainer($name)
@@ -125,7 +125,7 @@ class LocalProvider extends ExtendProvider {
 
         file_put_contents($this->_storage.'/'.$this->_data_file, json_encode($this->_data));
 
-        return new \FunnyLookinHat\Purgatory\Purgatory\Provider\LocalProvider\LocalContainer($this, $this->_data->containers->{$name});
+        return new Purgatory\Provider\LocalProvider\LocalContainer($this, $this->_data->containers->{$name});
     }
 
     public function getUrl()
