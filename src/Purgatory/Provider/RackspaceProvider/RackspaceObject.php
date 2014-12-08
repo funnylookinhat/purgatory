@@ -18,26 +18,23 @@ class RackspaceObject extends ExtendObject {
 
     public function getName()
     {
-    	return $this->_object->getName();
+        return $this->_object->getName();
     }
 
     public function update($path)
     {
-    	try
-    	{
-    		$data = fopen($path, 'r+');
-    		$this->_object->setContent($data);
+        try
+        {
+            $data = fopen($path, 'r+');
+            $this->_object->setContent($data);
             $this->_object->update();
 
-            // Request object be purged from CDN.
-            $this->_object->purge();
-            
-    		return $this;
-    	}
-    	catch( Exception $e )
-    	{
-    		throw new \FunnyLookinHat\Purgatory\PurgatoryObjectException("Could not update object: ".$e->getMessage());
-    	}
+            return $this;
+        }
+        catch( Exception $e )
+        {
+            throw new \FunnyLookinHat\Purgatory\PurgatoryObjectException("Could not update object: ".$e->getMessage());
+        }
     }
 
     public function getFilesize()

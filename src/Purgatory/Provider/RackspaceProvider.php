@@ -13,20 +13,20 @@ class RackspaceProvider extends ExtendProvider {
 
     public function __construct($config)
     {
-    	if( ! isset($config->endpoint) )
-    		$config->endpoint = $this->_defaultEndpoint;
+        if( ! isset($config->endpoint) )
+            $config->endpoint = $this->_defaultEndpoint;
 
-    	if( ! isset($config->username) )
-    		throw new \FunnyLookinHat\Purgatory\PurgatoryException("Provider config missing 'username'.");
+        if( ! isset($config->username) )
+            throw new \FunnyLookinHat\Purgatory\PurgatoryException("Provider config missing 'username'.");
 
-    	if( ! isset($config->apiKey) )
-    		throw new \FunnyLookinHat\Purgatory\PurgatoryException("Provider config missing 'apiKey'.");
+        if( ! isset($config->apiKey) )
+            throw new \FunnyLookinHat\Purgatory\PurgatoryException("Provider config missing 'apiKey'.");
 
         if( ! isset($config->region) )
             throw new \FunnyLookinHat\Purgatory\PurgatoryException("Provider config missing 'region'.");
 
-    	try
-    	{
+        try
+        {
             $this->_client = new Rackspace($config->endpoint, array(
                 'username' => $config->username,
                 'apiKey'   => $config->apiKey,

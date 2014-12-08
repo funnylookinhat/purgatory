@@ -18,19 +18,19 @@ class RackspaceContainer extends ExtendContainer {
 
     public function getName()
     {
-    	return $this->_container->getName();
+        return $this->_container->getName();
     }
 
     public function getObject($name)
     {
         try
         {
-        	$object = $this->_container->getObject($name);
-        	return new \FunnyLookinHat\Purgatory\Purgatory\Provider\RackspaceProvider\RackspaceObject($this, $object);
+            $object = $this->_container->getObject($name);
+            return new \FunnyLookinHat\Purgatory\Purgatory\Provider\RackspaceProvider\RackspaceObject($this, $object);
         }
         catch( \OpenCloud\ObjectStore\Exception\ObjectNotFoundException $e )
         {
-        	throw new \FunnyLookinHat\Purgatory\PurgatoryObjectDNEException("File does not exist: ".$e->getMessage());
+            throw new \FunnyLookinHat\Purgatory\PurgatoryObjectDNEException("File does not exist: ".$e->getMessage());
         }
     }
 
@@ -49,13 +49,13 @@ class RackspaceContainer extends ExtendContainer {
 
         try
         {
-        	$data = fopen($path, 'r+');
-        	$object = $this->_container->uploadObject($name, $data);
-        	return new \FunnyLookinHat\Purgatory\Purgatory\Provider\RackspaceProvider\RackspaceObject($this, $object);
+            $data = fopen($path, 'r+');
+            $object = $this->_container->uploadObject($name, $data);
+            return new \FunnyLookinHat\Purgatory\Purgatory\Provider\RackspaceProvider\RackspaceObject($this, $object);
         }
         catch( Exception $e )
         {
-        	throw new \FunnyLookinHat\Purgatory\PurgatoryObjectException("Could not upload object: ".$e->getMessage());
+            throw new \FunnyLookinHat\Purgatory\PurgatoryObjectException("Could not upload object: ".$e->getMessage());
         }
     }
 
